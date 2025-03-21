@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: faraday-redis
+spec:
+  selector:
+    matchLabels:
+      app: faraday-redis
+  serviceName: faraday-redis
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: faraday-redis
+    spec:
+      containers:
+      - name: app
+        image: redis:6.2-alpine
+        ports:
+        - containerPort: 6379
+          name: database

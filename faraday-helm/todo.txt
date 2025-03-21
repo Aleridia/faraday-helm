@@ -1,0 +1,8 @@
+Postgre :
+- Var env as secret/configmap
+- PV/PVC
+
+Faraday :
+- PV/PVC
+
+Working with port-forward to test

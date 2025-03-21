@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: faraday-deployment
+  labels:
+    app: faraday-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: faraday-deployment
+  template:
+    metadata:
+      labels:
+        app: faraday-deployment
+    spec:
+      containers:
+      - name: faraday-deployment
+        image: index.docker.io/faradaysec/faraday
+        command: ["/entrypoint.sh"]
+        ports:
+        - containerPort: 5985
+        env:
+        - name: PGSQL_USER
+          value: postgres
+        - name: PGSQL_PASSWD
+          value: postgres
+        - name: PGSQL_HOST
+          value: faraday-db
+        - name: PGSQL_DBNAME
+          value: faraday
+        - name: REDIS_SERVER
+          value: faraday-redis
