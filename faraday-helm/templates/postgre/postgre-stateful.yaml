@@ -26,3 +26,10 @@ spec:
           value: postgres
         - name: POSTGRES_DB
           value: faraday
+        volumeMounts:
+        - mountPath: "/var/lib/postgresql/data"
+          name: faraday-postgre-volume
+      volumes:
+        - name: faraday-postgre-volume
+          persistentVolumeClaim:
+          claimName: faraday-postgre-volume

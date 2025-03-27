@@ -1,6 +1,8 @@
 apiVersion: v1
 kind: Service
 metadata:
+  #Name must be "redis", otherwise celery will not find it
+  #The current REDIS_SERVER var env from Faraday server doesn't work
   name: redis
   labels:
     app: faraday-redis
