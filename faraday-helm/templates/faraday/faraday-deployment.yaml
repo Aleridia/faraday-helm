@@ -16,18 +16,18 @@ spec:
     spec:
       containers:
       - name: faraday-deployment
-        image: index.docker.io/faradaysec/faraday
+        image: {{ .Values.faraday.image }}
         command: ["/entrypoint.sh"]
         ports:
-        - containerPort: 5985
+        - containerPort: {{ .Values.faraday.containerPort }}
         env:
         - name: PGSQL_USER
-          value: postgres
+          value: {{ .Values.faraday.env.pgsql_user }}
         - name: PGSQL_PASSWD
-          value: postgres
+          value: {{ .Values.faraday.env.pgsql_passwd }}
         - name: PGSQL_HOST
-          value: faraday-db
+          value: {{ .Values.faraday.env.pgsql_host }}
         - name: PGSQL_DBNAME
-          value: faraday
+          value: {{ .Values.faraday.env.pgsql_dbname }}
         - name: REDIS_SERVER
-          value: faraday-redis
+          value: {{ .Values.faraday.env.redis_server }}

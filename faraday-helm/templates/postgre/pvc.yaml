@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: faraday-postgre-volume
+  name: {{ .Values.postgre.pvc.name }}
 spec:
   accessModes:
-    - ReadWriteOnce
+    - {{ .Values.postgre.pvc.accessModes }}
   resources:
     requests:
-      storage: 5Gi
-  storageClassName: longhorn
+      storage: {{ .Values.postgre.pvc.storage }}
+  storageClassName: {{ .Values.postgre.storageClassName }}

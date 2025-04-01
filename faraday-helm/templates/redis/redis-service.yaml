@@ -5,11 +5,11 @@ metadata:
   #The current REDIS_SERVER var env from Faraday server doesn't work
   name: redis
   labels:
-    app: faraday-redis
+    app: {{ .Values.faraday.env.redis_server }}
 spec:
   ports:
-  - port: 5432
+  - port: {{ .Values.redis.statefulset.port }}
     name: database
   clusterIP: None
   selector:
-    app: faraday-redis
+    app: {{ .Values.faraday.env.redis_server }}
