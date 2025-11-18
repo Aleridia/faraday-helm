@@ -1,0 +1,26 @@
+faraday:
+  image: index.docker.io/faradaysec/faraday
+  containerPort: 5985
+  env:
+    pgsql_user: postgres
+    pgsql_passwd: postgres
+    pgsql_host: faraday-db
+    pgsql_dbname: faraday
+    redis_server: faraday-redis
+postgre:
+  pvc:
+    name: faraday-postgre-volume
+    accessModes: ReadWriteOnce
+    storage: 5Gi
+    storageClassName: "longhorn"
+  statefulset:
+    image: "postgres:12.7-alpine"
+    port: 5432
+    env:
+      #This is used if you have relicas folder "lost+found" and pg wont init
+      #Add a folder in the path to avoid this
+      pgdata: /var/lib/postgresql/data
+redis:
+  statefulset:
+    image: redis:6.2-alpine
+    port: 6379

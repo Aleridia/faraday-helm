@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.faraday.env.redis_server }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.faraday.env.redis_server }}
+  serviceName: {{ .Values.faraday.env.redis_server }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.faraday.env.redis_server }}
+    spec:
+      containers:
+      - name: app
+        image: {{ .Values.redis.statefulset.image }}
+        ports:
+        - containerPort: {{ .Values.redis.statefulset.port }}
+          name: database

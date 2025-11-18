@@ -1,0 +1,11 @@
+Postgre + Redis :
+- Launch it before the faraday instance to avoid a crash in the Faraday deployment
+
+Faraday :
+- PV/PVC for plugins ?
+- Ingress
+
+Configure chart to not delete PV when Faraday is uninstalled. We want to keep the data
+
+Working with port-forward to test :
+`kubectl port-forward <POD> 5985:5985`

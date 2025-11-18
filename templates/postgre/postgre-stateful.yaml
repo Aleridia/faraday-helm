@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.faraday.env.pgsql_host }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.faraday.env.pgsql_host }}
+  serviceName: {{ .Values.faraday.env.pgsql_host }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.faraday.env.pgsql_host }}
+    spec:
+      containers:
+      - name: app
+        image: {{ .Values.postgre.statefulset.image}}
+        ports:
+        - containerPort: {{ .Values.postgre.statefulset.port }}
+          name: database
+        env:
+        - name: POSTGRES_USER
+          value: {{ .Values.faraday.env.pgsql_user }}
+        - name: POSTGRES_PASSWORD
+          value: {{ .Values.faraday.env.pgsql_passwd }}
+        - name: POSTGRES_DB
+          value: {{ .Values.faraday.env.pgsql_dbname }}
+        - name : PGDATA
+          value: {{ .Values.postgre.statefulset.env.pgdata }}
+        volumeMounts:
+        - mountPath: "/var/lib/postgresql/data"
+          name: {{ .Values.postgre.pvc.name }}
+      volumes:
+        - name: {{ .Values.postgre.pvc.name }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.postgre.pvc.name }}

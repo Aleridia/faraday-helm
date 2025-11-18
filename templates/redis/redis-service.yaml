@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  #Name must be "redis", otherwise celery will not find it
+  #The current REDIS_SERVER var env from Faraday server doesn't work
+  name: redis
+  labels:
+    app: {{ .Values.faraday.env.redis_server }}
+spec:
+  ports:
+  - port: {{ .Values.redis.statefulset.port }}
+    name: database
+  clusterIP: None
+  selector:
+    app: {{ .Values.faraday.env.redis_server }}

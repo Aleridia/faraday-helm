@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: faraday-deployment
+  labels:
+    app: faraday-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: faraday-deployment
+  template:
+    metadata:
+      labels:
+        app: faraday-deployment
+    spec:
+      containers:
+      - name: faraday-deployment
+        image: {{ .Values.faraday.image }}
+        command: ["/entrypoint.sh"]
+        ports:
+        - containerPort: {{ .Values.faraday.containerPort }}
+        env:
+        - name: PGSQL_USER
+          value: {{ .Values.faraday.env.pgsql_user }}
+        - name: PGSQL_PASSWD
+          value: {{ .Values.faraday.env.pgsql_passwd }}
+        - name: PGSQL_HOST
+          value: {{ .Values.faraday.env.pgsql_host }}
+        - name: PGSQL_DBNAME
+          value: {{ .Values.faraday.env.pgsql_dbname }}
+        - name: REDIS_SERVER
+          value: {{ .Values.faraday.env.redis_server }}
